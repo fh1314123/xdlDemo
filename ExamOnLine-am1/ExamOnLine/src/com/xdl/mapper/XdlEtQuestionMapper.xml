@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <!-- namespace指定和哪个Mapper映射器接口对应 -->
+<mapper namespace="com.xdl.mapper.XdlEtQuestionDAO">
+	<!-- 定义SQL语句 -->	
+    <insert id="insertEtQuestion" parameterType="com.xdl.bean.XdlEtQuestion"
+        useGeneratedKeys="true"  keyProperty="id">
+        insert into et_question
+		(description,question_type_id,points,group_id,is_visible,
+		create_time,creator,last_modify,answer,expose_times,
+		right_times,wrong_times,difficulty,
+		analysis,reference,examing_point,keyword) values
+		(#{description},#{question_type_id},#{points},#{group_id},#{is_visible},
+		#{create_time},#{creator},#{last_modify},#{answer},#{expose_times},
+		#{right_times},#{wrong_times},#{difficulty},
+		#{analysis},#{reference},#{examing_point},#{keyword}) 
+    </insert>
+    <!--  存入问题 和 问题对应的知识点  一次存入一个知识点  -->
+    <insert id="insertQuestionPoint" >
+         insert into et_question_2_point(question_id,point_id)
+         values(#{question_id},#{point_id})
+    </insert>
+    <!--  存入问题时 如果问题有对应的选项  则存入对应的选项  -->
+    <insert id="insertQuestionOption"  parameterType="com.xdl.bean.XdlEtQuestionOption">
+         insert into  et_question_2_option(question_id,option_name,option_content) 
+         values(#{question_id},#{option_name},#{option_content})
+    </insert> 
+     <!--  根据试题的类型 和 数量 随机取试题  -->
+     <select id="getQuestionListByQuestionTypeAndQuestionNum"
+          resultType="com.xdl.bean.XdlEtQuestion">
+          select * from  et_question  where question_type_id = #{question_type_id}
+             order by rand() limit 0, #{question_num}
+     </select>  
+</mapper>
+
+
+

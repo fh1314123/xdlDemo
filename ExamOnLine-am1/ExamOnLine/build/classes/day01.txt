@@ -1,0 +1,8 @@
+基于SSM 的登录   数据库是mysql
+1.在examdb34中 建立对应的et_admin 表
+2.搭建Spring  和 Mybatis  最终提供出 Service 对象
+3.搭建标注形式的mvc
+ 
+ 
+ 尝试 登录成功之后 显示知识点列表 (只显示知识点的name)   
+  

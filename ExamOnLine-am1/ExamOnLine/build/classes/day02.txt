@@ -1,0 +1,34 @@
+1.知识点列表的展示
+  1.1 建立对应的表   并插入数据  提交
+  1.2 spring 和 mybatis 的整合 
+     a.建立项目 导入jar包(ioc aop dao mybatis  mybatis-spring 驱动  连接池)  
+       拷贝spring 配置文件到src 下 
+     b.根据表 建立对应的实体类 
+     c.编写SQL 定义文件 
+     d.根据Mapper 映射器规则编写接口 
+     e.配置SqlSessionFactoryBean  和  MapperScannerConfigurer  
+     f.封装一个Service 对象 可以获取知识点列表  
+     g.测试 
+  1.3 在控制器方法中  使用Service 获取知识点列表 传递给页面展示  
+
+2.试题的添加 
+  2.1 页面提交的数据 可以被控制器获取到 
+    
+  2.2 控制器收到数据之后  再使用Service 把数据存入数据库  
+     a.分别建立 试题表  试题和知识点关联表     试题和选项的关联表 
+                 搞清楚这三张表的关系 
+     b.使用spring 和 mybatis  完成对数据库访问  最终提供出Service 对象 
+      
+     
+     
+     
+     
+     
+     
+     
+       
+ 
+
+
+
+     

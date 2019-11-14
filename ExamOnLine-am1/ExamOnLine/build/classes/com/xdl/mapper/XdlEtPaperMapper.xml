@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <!-- namespace指定和哪个Mapper映射器接口对应 -->
+<mapper namespace="com.xdl.mapper.XdlEtPaperDAO">
+	<!-- 定义SQL语句 -->	
+    <insert id="insertEtPaper"  parameterType="com.xdl.bean.XdlEtPaper"
+         useGeneratedKeys="true" keyProperty="id">
+         insert  into  et_paper(name,duration,total_point,pass_point,is_visible,
+        status,create_time,summary,is_subjective,answer_sheet,creator,difficulty,sum_score) 
+        values(#{name},#{duration},#{total_point},#{pass_point},#{is_visible},
+        #{status},#{create_time},#{summary},#{is_subjective},#{answer_sheet},
+        #{creator},#{difficulty},#{sum_score})  
+    </insert>
+    <!--  调用一次放入一个试卷对应的一个试题信息  -->
+    <insert id="insertEtPaperQuestion"   >
+        insert into et_paper_2_question (paper_id,question_id,order_num,question_score) 
+        values(#{paper_id},#{question_id},#{order_num},#{question_score})
+    </insert>
+    
+    <!--  根据试卷的id  查询试卷信息  -->
+    <select id="getEtPaperById"  parameterType="int"  resultMap="paperMap">
+         select * from  et_paper  where  id = #{id}
+    </select>
+    <resultMap type="com.xdl.bean.XdlEtPaper" id="paperMap">
+        <result  column="id"  property="id"/>
+        <collection property="questions"  
+            select="getEtPaperQuestionsByPaperId" column="id">
+        
+        </collection>
+    </resultMap>
+    <!--  关联查询  根据试卷的id 查询对应的试题列表   -->
+    <select id="getEtPaperQuestionsByPaperId"  parameterType="int"
+        resultType="com.xdl.bean.XdlEtQuestion">
+          select q.*,pq.question_score
+             from  et_question q,et_paper_2_question  pq  
+                 where  pq.paper_id = #{id} and  q.id = pq.question_id
+                     order by pq.order_num
+    </select>
+</mapper>
+
+
+
